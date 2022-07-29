@@ -1,0 +1,77 @@
+<mvc:View
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:micro="sap.suite.ui.microchart">
+   <Table 
+    items="{path: 'football>/SportDataSet',
+    sorter : {
+        path : 'PlayerPosition',
+        group : true}}">
+    <columns>
+        <Column demandPopin="true" minScreenWidth="Tablet">
+            <Text text="Игрок" />
+        </Column>
+        <Column demandPopin="true" minScreenWidth="Tablet">
+            <Text text="Эффективность" />
+        </Column>
+        <Column demandPopin="true" minScreenWidth="Tablet">
+            <Text text="Процент сыгранных матчей" />
+        </Column>
+        <Column demandPopin="true" minScreenWidth="Tablet">
+            <Text text="ЖК/КК (Микродиаграмма Харви)" />
+        </Column> 
+        <Column demandPopin="true" minScreenWidth="Tablet">
+            <Text text="ЖК/КК (Сравнительная микродиаграмма)" />
+        </Column>
+    </columns>
+    <items>
+        <ColumnListItem>
+            <cells>
+                <Text text="{football>PlayerId}"/>
+                <FlexBox height="70px" width="70px" renderType="Bare">
+                    <layoutData>
+                        <FlexItemData maxHeight="70px" />
+                    </layoutData>
+                    <micro:RadialMicroChart size="Responsive"
+                            percentage="{= ${football>PlayerPosition} !== 'ВРТ' ? 
+                                                ((${football>Goals} + ${football>Assists}) / ${football>CountOfMatches} * 100) : 
+                                                (${football>CleanSheets} / ${football>CountOfMatches} * 100)}"
+                            valueColor="{= ${football>PlayerPosition} !== 'ВРТ' ? 
+                                            ((${football>Goals} + ${football>Assists}) / ${football>CountOfMatches} * 100 > 25 ? 'Good' : 'Critical') :
+                                            (${football>CleanSheets} / ${football>CountOfMatches} * 100 > 30 ? 'Good' : 'Error') }"/>
+                </FlexBox>
+                <FlexBox height="70px" width="70px" renderType="Bare">
+                    <layoutData>
+                        <FlexItemData maxHeight="70px" />
+                    </layoutData>
+                    <micro:RadialMicroChart size="Responsive" 
+                            fraction="{football>CountOfMatches}" total="38"
+                            valueColor="{= ${football>CountOfMatches} / 38 * 100 > 60 ? 'Good' : 'Critical' }"
+                            />
+                </FlexBox>
+                <FlexBox height="70px" width="70px" renderType="Bare">
+                    <layoutData>
+                        <FlexItemData maxHeight="70px" />
+                    </layoutData>
+                    <micro:HarveyBallMicroChart size="Responsive" total="{= ${football>YellowCards} + ${football>RedCards} }" totalScale="шт">
+                        <micro:items>
+                            <micro:HarveyBallMicroChartItem fraction="{= ${football>YellowCards} }" color="Critical"/>
+                        </micro:items>
+                    </micro:HarveyBallMicroChart>
+                </FlexBox>
+                <FlexBox height="70px" width="70px" renderType="Bare">
+                    <layoutData>
+                        <FlexItemData maxHeight="70px" />
+                    </layoutData>
+                    <micro:ComparisonMicroChart scale=" к.">
+                        <micro:data>
+                            <micro:ComparisonMicroChartData title="Ж" value="{= ${football>YellowCards} }" color="Critical" />
+                            <micro:ComparisonMicroChartData title="К" value="{= -${football>RedCards} }" color="Error" />
+                        </micro:data>
+                    </micro:ComparisonMicroChart>
+                </FlexBox>
+            </cells>
+        </ColumnListItem> 
+    </items>
+   </Table>       
+</mvc:View>

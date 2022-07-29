@@ -1,0 +1,102 @@
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.PlayerPage" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout">
+	<Page title="Игрок ФК «Барселона» – {football>NameOfPlayer} {football>SurnameOfPlayer}" showNavButton="true" navButtonPress=".onNavBack">
+		<headerContent>
+			<Button
+					icon="sap-icon://business-by-design"
+					press=".onOpenDialog"/>
+		</headerContent>
+		<Carousel>
+			<Image src="../img/{football>PlayerId}.jpg" width="100%"></Image>
+			<ScrollContainer
+				height="100%"
+				width="100%"
+				horizontal="false"
+				vertical="true">
+				<List width="auto"
+					class="sapUiLargeMargin"
+					headerText="Персональные данные">
+					<items>
+						<StandardListItem
+							title="Фамилия игрока"
+							description="{football>SurnameOfPlayer}"/>
+						<StandardListItem
+							title="Имя игрока"
+							description="{football>NameOfPlayer}"/>
+						<StandardListItem
+							title="Дата рождения"
+							description="{path: 'football>DateOfBirth',
+								type: 'sap.ui.model.type.Date'}"/>
+						<StandardListItem
+							title="Национальность"
+							description="{football>Nationality}"/>
+						<StandardListItem
+							title="Рост игрока"
+							description="{parts: [{path: 'football>PlayerHeight'},  {path: 'view>/currency/0'}]}"/>
+						<StandardListItem
+							title="Вес игрока"
+							description="{parts: [{path: 'football>PlayerWeight'},  {path: 'view>/currency/1'}]}"/>
+					</items>
+				</List>
+			</ScrollContainer>
+
+			<ScrollContainer
+				height="100%"
+				width="100%"
+				horizontal="false"
+				vertical="true">
+				<List width="auto"
+					class="sapUiLargeMargin"
+					headerText="Статистические данные">
+					<items>
+						<ObjectListItem
+							title="Позиция игрока"
+							number="{
+								path: 'football>Personal2Sport/PlayerPosition'
+							}"
+							numberState="Success"/>
+						<ObjectListItem
+							title="Игровой номер"
+							number="{
+								path: 'football>Personal2Sport/JerseyNumber'
+							}"/>
+						<ObjectListItem
+							title="Количетсво сыгранных матчей"
+							number="{
+								path: 'football>Personal2Sport/CountOfMatches'
+							}"/>
+						<ObjectListItem
+							title="Голы"
+							number="{
+								path: 'football>Personal2Sport/Goals'
+							}"/>
+						<ObjectListItem
+							title="Accисты"
+							number="{
+								path: 'football>Personal2Sport/Assists'
+							}"/>
+						<ObjectListItem
+							title="Пропущенные мячи"
+							number="{= ${football>Personal2Sport/PlayerPosition} === 'ВРТ' ? 
+								${football>Personal2Sport/MissedGoals} : '-' }"/>
+						<ObjectListItem
+							title="Количество «сухих» матчей"
+							number="{= ${football>Personal2Sport/PlayerPosition} === 'ВРТ' ? 
+								${football>Personal2Sport/CleanSheets} : '-' }"/>
+						<ObjectListItem
+							title="Желтые карточки"
+							number="{
+								path: 'football>Personal2Sport/YellowCards'
+							}"
+							numberState="Warning"/>
+						<ObjectListItem
+							title="Красные карточки"
+							number="{
+								path: 'football>Personal2Sport/RedCards'
+							}"
+							numberState="Error"/>
+					</items>
+				</List>
+			</ScrollContainer>
+		</Carousel>
+	</Page>
+</mvc:View>

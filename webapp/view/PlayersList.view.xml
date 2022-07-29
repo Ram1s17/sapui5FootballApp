@@ -1,0 +1,31 @@
+<mvc:View
+   controllerName="sap.ui.demo.walkthrough.controller.PlayersList"
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc">
+   <List
+      id="playersList"
+      headerText="{i18n>playersListTitle}"
+      class="sapUiResponsiveMargin"
+      width="auto"
+      items="{path: 'football>/PersonalDataSet', 
+            sorter : {
+                path : 'PlayerId',
+                group : true
+        }}" >
+      <headerToolbar>
+        <Toolbar>
+           <Title text="{i18n>footballListTitle}"/>
+           <ToolbarSpacer/>
+           <SearchField width="50%" search=".onFilterPlayers"/>
+        </Toolbar>
+     </headerToolbar>
+      <items>
+         <ObjectListItem
+            title="{football>NameOfPlayer} {football>SurnameOfPlayer} {football>PatronymicOfPlayer}" icon="sap-icon://soccer"
+            type="Navigation"
+			   press="onPress"
+            intro="{football>Nationality}">
+        </ObjectListItem>
+      </items>
+   </List>
+</mvc:View>
